@@ -10,7 +10,7 @@ import Loader from "../loader/Loader";
 const logo = (
     <div className={styles.logo}>
         <Link to="/"> 
-            <h2>Insta<span>gram</span></h2>
+            <h2>Pixa<span>gram</span></h2>
         </Link>
     </div>
 );

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import PostList from './PostList'
-import styles from "./Post.module.css"
 
 const Post = () => {
     const BASE_URL = "http://localhost:8000/"
@@ -18,6 +17,16 @@ const Post = () => {
             throw response
         })
         .then(data => {
+            const result = data.sort((a, b) => {
+            const t_a = a.timestamp.split(/[-T:]/);
+            const t_b = b.timestamp.split(/[-T:]/);
+            const d_a = new Date(Date.UTC(t_a[0], t_a[1]-1, t_a[2], t_a[3], t_a[4], t_a[5]));
+            const d_b = new Date(Date.UTC(t_b[0], t_b[1]-1, t_b[2], t_b[3], t_b[4], t_b[5]));
+            return d_b - d_a
+            })
+            return result
+        })
+        .then(data => {
             setPosts(data)
         })
         .catch(error => {
@@ -29,15 +38,12 @@ const Post = () => {
         get_post()
     }, [])
     return (
-        <div className={styles.container}>
-            <div className={styles.card}>
+        <div className='app_post'>
             {
             posts.map(post => (
                 <PostList post={post} />
             ))
             }
-            <p className={styles.card__name}>Lily-Grace Colley</p>
-            </div>
         </div>
     )
 }     
