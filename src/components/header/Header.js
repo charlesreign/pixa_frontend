@@ -6,6 +6,8 @@ import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
+import { useSelector, useDispatch } from "react-redux";
+import { TOGGLE_AUTH_TOKEN } from "../../store/slice/authSlice";
 
 const logo = (
     <div className={styles.logo}>
@@ -23,6 +25,13 @@ const Header = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+    
+    // access auth token from redux store
+    const isAuthToken = window.localStorage.getItem("authToken");
+
+    console.log("this is auth token="+isAuthToken)
+
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
@@ -33,6 +42,7 @@ const Header = () => {
 
     const logoutUser = () => {
         setIsLoading(true);
+        dispatch(TOGGLE_AUTH_TOKEN(null))
 
     };
 
@@ -67,15 +77,17 @@ const Header = () => {
                 </ul>
                 <div className={styles["header-right"]} onClick={hideMenu}>
                 <span className={styles.links}>
-                    <NavLink to="/login" className={activeLink}>
-                    Login
-                    </NavLink>
-                    <NavLink to="/register" className={activeLink}>
-                    Register{" "}
-                    </NavLink>
-                    <NavLink to="/" onClick={logoutUser}>
-                    logout
-                    </NavLink>
+                    { isAuthToken ? (
+                        <NavLink to="/" onClick={logoutUser}>logout</NavLink>
+                    ):
+                    (
+                        <>
+                        <NavLink to="/login" className={activeLink}>Login</NavLink>
+                        <NavLink to="/register" className={activeLink}>Register{" "}</NavLink>
+                        </>
+                    )
+                    
+                    }
                 </span>
                 </div>
             </nav>
@@ -89,4 +101,4 @@ const Header = () => {
     );
     };
 
-    export default Header;
+export default Header;

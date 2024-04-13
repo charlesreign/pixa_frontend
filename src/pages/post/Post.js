@@ -27,6 +27,7 @@ const Post = () => {
             return result
         })
         .then(data => {
+            console.log(data[0]);
             setPosts(data)
         })
         .catch(error => {
