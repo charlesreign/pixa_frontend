@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
 import { useDispatch } from "react-redux";
-import { TOGGLE_AUTH_TOKEN } from "../../store/slice/authSlice";
+import { TOGGLE_AUTH_TOKEN, TOGGLE_TOKEN_TYPE, TOGGLE_USER_ID, TOGGLE_USERNAME } from "../../store/slice/authSlice";
 
 
 
@@ -47,6 +47,9 @@ const Login = () => {
         .then(data => {
             console.log(data);
             dispatch(TOGGLE_AUTH_TOKEN(data.access_token))
+            dispatch(TOGGLE_TOKEN_TYPE(data.token_type))
+            dispatch(TOGGLE_USER_ID(data.user_id))
+            dispatch(TOGGLE_USERNAME(data.username))
             window.location.replace(HOME_URL)
         })
         .catch(error => {

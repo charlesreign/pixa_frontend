@@ -6,8 +6,8 @@ import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
-import { useSelector, useDispatch } from "react-redux";
-import { TOGGLE_AUTH_TOKEN } from "../../store/slice/authSlice";
+import { useDispatch } from "react-redux";
+import { TOGGLE_AUTH_TOKEN, TOGGLE_TOKEN_TYPE, TOGGLE_USER_ID, TOGGLE_USERNAME } from "../../store/slice/authSlice";
 
 const logo = (
     <div className={styles.logo}>
@@ -30,7 +30,7 @@ const Header = () => {
     // access auth token from redux store
     const isAuthToken = window.localStorage.getItem("authToken");
 
-    console.log("this is auth token="+isAuthToken)
+    // console.log("this is auth token="+isAuthToken)
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
@@ -43,6 +43,9 @@ const Header = () => {
     const logoutUser = () => {
         setIsLoading(true);
         dispatch(TOGGLE_AUTH_TOKEN(null))
+        dispatch(TOGGLE_TOKEN_TYPE(null))
+        dispatch(TOGGLE_USER_ID(null))
+        dispatch(TOGGLE_USERNAME(null))
 
     };
 
@@ -68,7 +71,7 @@ const Header = () => {
 
                 <ul onClick={hideMenu}>
                 <li className={styles["logo-mobile"]}>
-                    <Link to="/">{logo}</Link>
+                    {logo}
                     <FaTimes size={22} color="#fff" onClick={hideMenu} />
                 </li>
                 <li>

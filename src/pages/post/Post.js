@@ -10,7 +10,7 @@ const Post = () => {
         fetch(BASE_URL + "post/all")
         .then(response => {
             const response_data = response.json()
-            console.log(response_data);
+            // console.log(response_data);
             if (response.ok) {
                 return response_data
             }
@@ -27,7 +27,7 @@ const Post = () => {
             return result
         })
         .then(data => {
-            console.log(data[0]);
+            // console.log(data[0]);
             setPosts(data)
         })
         .catch(error => {
@@ -42,7 +42,7 @@ const Post = () => {
         <div className='app_post'>
             {
             posts.map(post => (
-                <PostList post={post} />
+                <PostList post={post} key={post.id}/>
             ))
             }
         </div>

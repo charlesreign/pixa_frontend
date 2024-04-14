@@ -4,8 +4,16 @@ import { FiUser } from "react-icons/fi";
 
 const PostList = ({ post }) => {
     const BASE_URL = "http://localhost:8000/"
+    const HOME_URL = "http://localhost:3000/"
     const [imageUrl, setImageUrl] = useState('')
     const [comments, setcomments] = useState([])
+    const [newComment, setNewComment] = useState('')
+
+    // access token from windows local storage
+    const authToken = window.localStorage.getItem("authToken");
+    const authTokenType = window.localStorage.getItem("authTokenType");
+    const authUserId = window.localStorage.getItem("userId");
+    const authUsername = window.localStorage.getItem("username");
 
     const construct_image = () =>{
         if (post.image_url_type === 'absolute') {
@@ -20,6 +28,83 @@ const PostList = ({ post }) => {
         setcomments(post.comments)
     }
 
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        const requestOptions = {
+            method: 'POST',
+            headers: new Headers({
+                'Authorization': authTokenType + ' ' + authToken,
+                'Content-Type': 'application/json'
+            })
+        }
+
+        fetch(BASE_URL + 'post/delete/' + post.id, requestOptions)
+        .then(response => {
+            if (response.ok) {
+                window.location.replace(HOME_URL)
+                return response.json()
+            }
+            throw response
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
+    }
+
+    const postComment = (e) => {
+        e.preventDefault();
+
+        const json_string = JSON.stringify({
+            "username": authUsername,
+            "text": newComment,
+            "post_id": post.id
+        })
+
+        const requestOptions = {
+            method: 'POST',
+            headers: new Headers({
+                'Authorization': authTokenType + ' ' + authToken,
+                'Content-Type': 'application/json'
+            }),
+            body: json_string
+        }
+
+        fetch(BASE_URL + 'comment/create', requestOptions)
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+            throw response
+        })
+        .then(data => {
+            fetchComment()
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+            setNewComment('')
+        })
+    }
+
+    const fetchComment = () => {
+        fetch(BASE_URL + 'comment/all/' + post.id)
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+            throw response
+        })
+        .then(data => {
+            setcomments(data)
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     useEffect(() => {
         construct_image()
         construct_comments()
@@ -31,7 +116,7 @@ return (
             <FiUser size={20} />
             <div className={styles.post_headerInfo}>
             <p>{post.user.username}</p>
-            <button className="--btn --btn-danger">Delete</button>
+            <button className="--btn --btn-danger" onClick={handleDelete}>Delete</button>
             </div>
         </div>
 
@@ -39,14 +124,29 @@ return (
 
         <h4 className={styles.post_text}>{post.caption}</h4>
 
-        <div className={styles.post_comments}>
+        <div className={styles.post_comments} key={post.id}>
             {
             comments.map((comment) => (
                 <p> <strong>{comment.username}:</strong> {comment.text} </p>
             ))
         }
         </div>
-
+        {authToken && 
+        (
+            <form className={styles.comment_form} onSubmit={postComment}>
+                <input
+                className={styles.comment_input}
+                type="text"
+                placeholder="Add comment"
+                required
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                />
+                <button disabled={!newComment} className={styles.comment_btn}>comment</button>
+            </form>
+        )
+        }
+        
     </div>
 )
 }
