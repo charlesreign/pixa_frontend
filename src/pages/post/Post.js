@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import PostList from './PostList'
+import Loader from "../../components/loader/Loader";
 
 const Post = () => {
     const BASE_URL = "http://localhost:8000/"
     
     const [posts, setPosts] = useState([])
+    const [isLoading, setIsLoading] = useState(false);
 
     const get_post = () =>{
+        setIsLoading(true);
         fetch(BASE_URL + "post/all")
         .then(response => {
             const response_data = response.json()
@@ -29,9 +32,11 @@ const Post = () => {
         .then(data => {
             // console.log(data[0]);
             setPosts(data)
+            setIsLoading(false);
         })
         .catch(error => {
             console.log(error);
+            setIsLoading(false);
         })
     }
 
@@ -39,6 +44,8 @@ const Post = () => {
         get_post()
     }, [])
     return (
+        <>
+        {isLoading && <Loader />}
         <div className='app_post'>
             {
             posts.map(post => (
@@ -46,6 +53,8 @@ const Post = () => {
             ))
             }
         </div>
+        </>
+        
     )
 }     
 

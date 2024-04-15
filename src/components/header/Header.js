@@ -41,7 +41,7 @@ const Header = () => {
     };
 
     const logoutUser = () => {
-        setIsLoading(true);
+        // setIsLoading(true);
         dispatch(TOGGLE_AUTH_TOKEN(null))
         dispatch(TOGGLE_TOKEN_TYPE(null))
         dispatch(TOGGLE_USER_ID(null))

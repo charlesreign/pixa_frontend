@@ -1,16 +1,16 @@
 import { useState } from "react";
 import styles from "../../pages/auth/Auth.module.scss"
-import loginImg from "../../assets/login.png";
-import { Link } from "react-router-dom";
 import Card from "../../components/card/Card";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoCloudUploadSharp } from "react-icons/io5";
+import Loader from "../../components/loader/Loader";
 
 
 const Upload = () => {
     const [caption, setCaption] = useState('')
     const [image, setImage] = useState(null)
+    const [isLoading, setIsLoading] = useState(false);
     // access token from windows local storage
     const authToken = window.localStorage.getItem("authToken");
     const authTokenType = window.localStorage.getItem("authTokenType");
@@ -61,6 +61,7 @@ const Upload = () => {
     }
 
     const createPost = (image_url) => {
+        setIsLoading(true);
         const json_string = JSON.stringify({
             "image_url": image_url,
             "image_url_type": "relative",
@@ -89,11 +90,15 @@ const Upload = () => {
         })
         .catch(error => {
             console.log(error);
+            setIsLoading(false);
+            toast.error(error)
         })
         
     }
 
     return (
+        <>
+        {isLoading && <Loader />}
         <section className={`container ${styles.auth}`}>
             <Card>
                 <div className={styles.form}>
@@ -118,7 +123,9 @@ const Upload = () => {
                 
                 </div>
             </Card>
-            </section>
+        </section>
+        </>
+        
     )
 }
 

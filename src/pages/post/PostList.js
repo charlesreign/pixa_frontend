@@ -12,7 +12,6 @@ const PostList = ({ post }) => {
     // access token from windows local storage
     const authToken = window.localStorage.getItem("authToken");
     const authTokenType = window.localStorage.getItem("authTokenType");
-    const authUserId = window.localStorage.getItem("userId");
     const authUsername = window.localStorage.getItem("username");
 
     const construct_image = () =>{

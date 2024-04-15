@@ -21,6 +21,8 @@ const HOME_URL = "http://localhost:3000/"
 const registerUser = (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
+
     const json_string = JSON.stringify({
         username: username,
         email: email,
@@ -41,11 +43,14 @@ const registerUser = (e) => {
         throw response
     })
     .then(data => {
+        setIsLoading(false);
         console.log(data);
         window.location.replace(HOME_URL+'login')
     })
     .catch(error => {
-        console.log(error);
+        console.log("An error has occurred, error=" +error.message);
+        setIsLoading(false);
+        toast.error("An error has occurred, error=" +error.message+ ' data')
     })
 }
 

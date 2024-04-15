@@ -50,10 +50,13 @@ const Login = () => {
             dispatch(TOGGLE_TOKEN_TYPE(data.token_type))
             dispatch(TOGGLE_USER_ID(data.user_id))
             dispatch(TOGGLE_USERNAME(data.username))
+            setIsLoading(false);
             window.location.replace(HOME_URL)
         })
         .catch(error => {
-            console.log(error);
+            console.log("An error has occurred, error=" +error.message+ ' data');
+            setIsLoading(false);
+            toast.error("An error has occurred, error=" +error.message+ ' data')
         })
     };
 
