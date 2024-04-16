@@ -3,8 +3,6 @@ import styles from "./Header.module.scss";
 import { Link, NavLink } from "react-router-dom";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { FaTimes } from "react-icons/fa";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
 import { useDispatch } from "react-redux";
 import { TOGGLE_AUTH_TOKEN, TOGGLE_TOKEN_TYPE, TOGGLE_USER_ID, TOGGLE_USERNAME } from "../../store/slice/authSlice";
@@ -23,7 +21,6 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
 
     const dispatch = useDispatch();
     
@@ -41,7 +38,6 @@ const Header = () => {
     };
 
     const logoutUser = () => {
-        // setIsLoading(true);
         dispatch(TOGGLE_AUTH_TOKEN(null))
         dispatch(TOGGLE_TOKEN_TYPE(null))
         dispatch(TOGGLE_USER_ID(null))

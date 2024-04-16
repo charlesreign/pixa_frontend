@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Auth.module.scss";
 import registerImg from "../../assets/register.png";
 import Card from "../../components/card/Card";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
@@ -13,7 +13,6 @@ const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 const [cPassword, setCPassword] = useState("");
 const [isLoading, setIsLoading] = useState(false);
-const navigate = useNavigate();
 
 const BASE_URL = "http://localhost:8000/"
 const HOME_URL = "http://localhost:3000/"

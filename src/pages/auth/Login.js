@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Card from "../../components/card/Card";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
 import { useDispatch } from "react-redux";
 import { TOGGLE_AUTH_TOKEN, TOGGLE_TOKEN_TYPE, TOGGLE_USER_ID, TOGGLE_USERNAME } from "../../store/slice/authSlice";
@@ -19,7 +18,6 @@ const Login = () => {
     const [username, setUsernamee] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const BASE_URL = "http://localhost:8000/"
     const HOME_URL = "http://localhost:3000/"
 
