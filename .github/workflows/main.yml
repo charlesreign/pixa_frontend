@@ -1,0 +1,32 @@
+name: Reactjs Application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  Docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      
+      - name: Dependecies
+        run: npm ci
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Build the Reactjs Docker image
+        run: docker build -t '${{secrets.DOCKER_LOGIN}}'/pixagram_front .
+      
+      - name: Login to docker
+        run: docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
+
+      - name: Push the docker image
+        run: docker push '${{secrets.DOCKER_LOGIN}}'/pixagram_front:latest
