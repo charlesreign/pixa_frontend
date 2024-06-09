@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pixafrontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: pixafrontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixafrontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pixafrontend
+  template:
+    metadata:
+      labels:
+        app: pixafrontend
+    spec:
+      containers:
+      - name: pixafrontend
+        image: charliereign/pixagram_front
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
