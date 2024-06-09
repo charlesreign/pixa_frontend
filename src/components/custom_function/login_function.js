@@ -3,8 +3,6 @@ import { TOGGLE_AUTH_TOKEN } from "../../store/slice/authSlice";
 
 const userloginfunction = (BASE_URL, username, password, dispatch) => {
     
-    const HOME_URL = "http://localhost:3000/"
-    
     let formData = new FormData()
     formData.append("username", username)
     formData.append("password", password)
@@ -24,7 +22,7 @@ const userloginfunction = (BASE_URL, username, password, dispatch) => {
     .then(data => {
         console.log(data);
         dispatch(TOGGLE_AUTH_TOKEN(data.access_token))
-        window.location.replace(HOME_URL)
+        window.location.replace(process.env.REACT_APP_FRONTEND_BASE_URL)
     })
     .catch(error => {
         console.log(error);

@@ -16,9 +16,6 @@ const Upload = () => {
     const authTokenType = window.localStorage.getItem("authTokenType");
     const authUserId = window.localStorage.getItem("userId");
 
-    const BASE_URL = "http://localhost:8000/"
-    const HOME_URL = "http://localhost:3000/"
-
     const handleUpload = (e) => {
         e.preventDefault();
 
@@ -33,7 +30,7 @@ const Upload = () => {
             body: formData
         }
 
-        fetch(BASE_URL + 'post/image', requestOptions)
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'post/image', requestOptions)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -77,7 +74,7 @@ const Upload = () => {
             body: json_string
         }
 
-        fetch(BASE_URL + 'post/create', requestOptions)
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'post/create', requestOptions)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -85,7 +82,7 @@ const Upload = () => {
             throw response
         })
         .then(data => {
-            window.location.replace(HOME_URL)
+            window.location.replace(process.env.REACT_APP_FRONTEND_BASE_URL)
             window.scrollTo(0,0)
         })
         .catch(error => {

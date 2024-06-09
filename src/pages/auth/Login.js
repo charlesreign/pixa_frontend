@@ -18,8 +18,6 @@ const Login = () => {
     const [username, setUsernamee] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const BASE_URL = "http://localhost:8000/"
-    const HOME_URL = "http://localhost:3000/"
 
     const loginUser = (e) => {
         e.preventDefault();
@@ -35,7 +33,7 @@ const Login = () => {
             body: formData
         }
 
-        fetch(BASE_URL + 'login', requestOptions)
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'login', requestOptions)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -49,7 +47,7 @@ const Login = () => {
             dispatch(TOGGLE_USER_ID(data.user_id))
             dispatch(TOGGLE_USERNAME(data.username))
             setIsLoading(false);
-            window.location.replace(HOME_URL)
+            window.location.replace(process.env.REACT_APP_FRONTEND_BASE_URL)
         })
         .catch(error => {
             console.log("An error has occurred, error=" +error.message+ ' data');

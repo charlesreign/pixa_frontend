@@ -14,9 +14,6 @@ const [password, setPassword] = useState("");
 const [cPassword, setCPassword] = useState("");
 const [isLoading, setIsLoading] = useState(false);
 
-const BASE_URL = "http://localhost:8000/"
-const HOME_URL = "http://localhost:3000/"
-
 const registerUser = (e) => {
     e.preventDefault();
 
@@ -34,7 +31,7 @@ const registerUser = (e) => {
         body: json_string
     }
 
-    fetch(BASE_URL + 'user/create', requestOption)
+    fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'user/create', requestOption)
     .then(response => {
         if (response.ok) {
             return response.json()
@@ -44,7 +41,7 @@ const registerUser = (e) => {
     .then(data => {
         setIsLoading(false);
         console.log(data);
-        window.location.replace(HOME_URL+'login')
+        window.location.replace(process.env.REACT_APP_FRONTEND_BASE_URL+'login')
     })
     .catch(error => {
         console.log("An error has occurred, error=" +error.message);

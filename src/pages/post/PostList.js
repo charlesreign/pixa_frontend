@@ -3,8 +3,6 @@ import styles from "./Post.module.css"
 import { FiUser } from "react-icons/fi";
 
 const PostList = ({ post }) => {
-    const BASE_URL = "http://localhost:8000/"
-    const HOME_URL = "http://localhost:3000/"
     const [imageUrl, setImageUrl] = useState('')
     const [comments, setcomments] = useState([])
     const [newComment, setNewComment] = useState('')
@@ -19,7 +17,7 @@ const PostList = ({ post }) => {
             setImageUrl(post.image_url)
         }
         else{
-            setImageUrl(BASE_URL + post.image_url)
+            setImageUrl(process.env.REACT_APP_BACKEND_BASE_URL + post.image_url)
         }
     }
 
@@ -38,10 +36,10 @@ const PostList = ({ post }) => {
             })
         }
 
-        fetch(BASE_URL + 'post/delete/' + post.id, requestOptions)
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'post/delete/' + post.id, requestOptions)
         .then(response => {
             if (response.ok) {
-                window.location.replace(HOME_URL)
+                window.location.replace(process.env.REACT_APP_FRONTEND_BASE_URL)
                 return response.json()
             }
             throw response
@@ -70,7 +68,7 @@ const PostList = ({ post }) => {
             body: json_string
         }
 
-        fetch(BASE_URL + 'comment/create', requestOptions)
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'comment/create', requestOptions)
         .then(response => {
             if (response.ok) {
                 return response.json()
@@ -89,7 +87,7 @@ const PostList = ({ post }) => {
     }
 
     const fetchComment = () => {
-        fetch(BASE_URL + 'comment/all/' + post.id)
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + 'comment/all/' + post.id)
         .then(response => {
             if (response.ok) {
                 return response.json()

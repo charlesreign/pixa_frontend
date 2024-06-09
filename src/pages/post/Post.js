@@ -3,14 +3,13 @@ import PostList from './PostList'
 import Loader from "../../components/loader/Loader";
 
 const Post = () => {
-    const BASE_URL = "http://localhost:8000/"
     
     const [posts, setPosts] = useState([])
     const [isLoading, setIsLoading] = useState(false);
 
     const get_post = () =>{
         setIsLoading(true);
-        fetch(BASE_URL + "post/all")
+        fetch(process.env.REACT_APP_BACKEND_BASE_URL + "post/all")
         .then(response => {
             const response_data = response.json()
             // console.log(response_data);
