@@ -27,6 +27,12 @@ spec:
       containers:
       - name: pixafrontend
         image: charliereign/pixagram_front
+        env:
+        - name: REACT_APP_FRONTEND_BASE_URL
+          value: "http://localhost:3000/"
+        - name: REACT_APP_BACKEND_BASE_URL
+          value: "http://localhost:8000/"
+        # imagePullPolicy: Always 
         resources:
           limits:
             memory: "128Mi"
