@@ -13,10 +13,16 @@ RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 
 RUN npm install
 
+RUN npm install serve
+
 # add app
 COPY . .
+
+# production build
+RUN npm run build
+
 
 EXPOSE 3000
 
 # start app
-CMD ["npm", "start"]
+CMD ["serve", "-s" "build"]
