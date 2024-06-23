@@ -105,7 +105,7 @@ const PostList = ({ post }) => {
     useEffect(() => {
         construct_image()
         construct_comments()
-    }, [])
+    })
     
 return (
     <div className={styles.post}>

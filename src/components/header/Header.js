@@ -20,7 +20,7 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading] = useState(false);
 
     const dispatch = useDispatch();
     
