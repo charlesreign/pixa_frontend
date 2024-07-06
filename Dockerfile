@@ -15,13 +15,13 @@ RUN npm install
 
 # RUN npm install serve
 
-# add app
-COPY . .
-
 # production build
 RUN npm run build
 
 RUN npm install -g serve
+
+# add app
+COPY . .
 
 
 EXPOSE 3000
